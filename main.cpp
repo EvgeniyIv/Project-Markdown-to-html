@@ -1,10 +1,14 @@
+#include <string.h>
 #include <fstream>
 #include <string>
 #include <iostream>
+
 #include "Md_file.h"
 #include "parse_markdown.h"
 
 using namespace std;
+
+string changeExtensionFile(string& file_name);
 
 int main(int argc, char* argv[]) {
 
@@ -23,6 +27,8 @@ int main(int argc, char* argv[]) {
 
 	Md_file* md_file = new Md_file(file_name);
 
+	ofstream outfile (changeExtensionFile(file_name));
+
 	if (!md_file->openFile()) {
 		cout << "File not found..." << endl;
 		exit(EXIT_FAILURE);
@@ -33,17 +39,19 @@ int main(int argc, char* argv[]) {
 	cout << endl;
 
 	while (getline(md_file->getFile(), line)) {
-		parseline(line);
+		outfile << parseline(line) << endl;
 	}
 
-	cout << "</p>";
-
-	cout << endl;
-
 	md_file->closeFile();
+
+	outfile.close();
 
 	cout << endl;
 
 	delete md_file;
 
+}
+
+string changeExtensionFile(string& file_name) {
+	return file_name.substr(0, (file_name.rfind(".") + 1)) + "html";
 }
