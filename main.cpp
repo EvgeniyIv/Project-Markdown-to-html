@@ -38,9 +38,13 @@ int main(int argc, char* argv[]) {
 
 	cout << endl;
 
+	outfile << "<p>" << endl;
+
 	while (getline(md_file->getFile(), line)) {
 		outfile << parseline(line) << endl;
 	}
+
+	outfile << "</p>" << endl;
 
 	md_file->closeFile();
 
