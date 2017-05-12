@@ -8,6 +8,13 @@
 
 using namespace std;
 
+/**
+ * Bool
+ */
+bool need_paragraph = true;
+bool current_paragraph = false;
+bool current_list = false;
+
 string changeExtensionFile(string& file_name);
 
 int main(int argc, char* argv[]) {
@@ -27,26 +34,20 @@ int main(int argc, char* argv[]) {
 
 	Md_file* md_file = new Md_file(file_name);
 
-	ofstream outfile;
-
-	outfile.open(changeExtensionFile(file_name).c_str(), ios::out);
+	ofstream outfile (changeExtensionFile(file_name));
 
 	if (!md_file->openFile()) {
 		cout << "File not found..." << endl;
-		return 1;
+		exit(EXIT_FAILURE);
 	}
 
 	cout << "File opened" << endl;
 
 	cout << endl;
 
-	outfile << "<p>" << endl;
-
 	while (getline(md_file->getFile(), line)) {
 		outfile << parseline(line) << endl;
 	}
-
-	outfile << "</p>" << endl;
 
 	md_file->closeFile();
 
