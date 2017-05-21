@@ -10,26 +10,30 @@ using namespace std;
 /**
  * Regex
  */
+//*some tex*
 regex italic_regex("[<>a-zA-Z0-9 ]*\\*([a-zA-Z0-9 ]*)\\*[<>a-zA-Z0-9 ]*");
+//**some text**
 regex bold_regex("\\*\\*(.*)\\*\\*");
-regex url_regex("\\[(.*)\\]\\((.*)\\)");
-regex img_regex("!\\[(.*)\\]\\((.*)\\)");
+//*		Some text
 regex list_regex("\\*\t(.*)");
+//[some text](URL)
+regex url_regex("[^!]*\\[(.*)\\]\\((.*)\\)");
+//![some text](URL)
+regex img_regex("!\\[(.*)\\]\\((.*)\\)");
 
 /*
  * H1, H2 and H3 style headers regexs
  */
+//# some text
 regex h1_regex("# (.*)");
+//## some text
 regex h2_regex("## (.*)");
+//### some text
 regex h3_regex("### (.*)");
 
-/**
- * Bool
- */
-bool paragraph = false;
-bool entry = false;
-bool italic = false;
-bool bold = false;
+extern bool need_paragraph;
+extern bool current_paragraph;
+extern bool current_list;
 
 void str_replace( string &s, string &search, string &replace ) {
 	for( size_t pos = 0; ; pos += replace.length() )
@@ -214,10 +218,8 @@ string parseline(string& line) {
 				toReplace += "<h1>";
 				toReplace += match[1];
 				toReplace += "</h1>";
-				cout << "toReplace : " << toReplace << endl;
 				search += "# ";
 				search += match[1];
-				cout << "search : " << search << endl;
 				str_replace(stringToReturn, search, toReplace);
 			}
 		}
