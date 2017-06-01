@@ -11,9 +11,13 @@ using namespace std;
  * Regex
  */
 //*some tex*
-regex italic_regex("[<>a-zA-Z0-9 ]*\\*([a-zA-Z0-9 ]*)\\*[<>a-zA-Z0-9 ]*");
+regex italic_regex(".*\\*(.*)\\*.*");
+//**some text**
+regex bold_regex(".*\\*\\*(.*)\\*\\*.*");
 //*		Some text
 regex list_regex("\\*\t(.*)");
+//1.	Some text
+regex ordonate_list_regex("[[digit]]\\.\t(.*)");
 //[some text](URL)
 regex url_regex("[^!]*\\[(.*)\\]\\((.*)\\)");
 //![some text](URL)
@@ -28,10 +32,25 @@ regex h1_regex("# (.*)");
 regex h2_regex("## (.*)");
 //### some text
 regex h3_regex("### (.*)");
+//#### some text
+regex h4_regex("#### (.*)");
+//##### some text
+regex h5_regex("##### (.*)");
+//###### some text
+regex h6_regex("###### (.*)");
+
+// Some text
+// =========
+regex equals_title("[^a-zA-Z0-9]\\=+[^a-zA-Z0-9]");
+
+// Some text
+// ---------
+regex dash_title("[^a-zA-Z0-9]\\-+[^a-zA-Z0-9]");
 
 extern bool need_paragraph;
 extern bool current_paragraph;
 extern bool current_list;
+extern bool debug;
 
 void convertToHTML::str_replace( string &s, string &search, string &replace ) {
 	for( size_t pos = 0; ; pos += replace.length() )
@@ -73,6 +92,11 @@ void convertToHTML::verification_bold(string& actualString, const string& Previo
 		search += match[1];
 		search += "**";
 		str_replace(actualString, search, toReplace);
+	}
+	else {
+		if (debug) {
+			cout << actualString << ": No replacement (bold)" << endl;
+		}
 	}
 
 }
