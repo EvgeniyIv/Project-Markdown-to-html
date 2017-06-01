@@ -1,3 +1,4 @@
+#include <string.h>
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -7,7 +8,16 @@
 
 using namespace std;
 
-int main(int argc, char* argv[]) {
+/**
+ * Bool
+ */
+bool need_paragraph = true;
+bool current_paragraph = false;
+bool current_list = false;
+
+string changeExtensionFile(string& file_name);
+
+int main() {
 
 	string file_name;
 
@@ -24,9 +34,13 @@ int main(int argc, char* argv[]) {
 
 	Md_file* md_file = new Md_file(file_name);
 
+	ofstream outfile;
+
+	outfile.open(changeExtensionFile(file_name).c_str(), ios::out);
+
 	if (!md_file->openFile()) {
 		cout << "File not found..." << endl;
-		exit(EXIT_FAILURE);
+		return 1;
 	}
 
 	cout << "File opened" << endl;
@@ -34,15 +48,19 @@ int main(int argc, char* argv[]) {
 	cout << endl;
 
 	while (getline(md_file->getFile(), line)) {
-		cout << parseline(line) << endl;
+		outfile << parseline(line) << endl;
 	}
 
-	cout << endl;
-
 	md_file->closeFile();
+
+	outfile.close();
 
 	cout << endl;
 
 	delete md_file;
 
+}
+
+string changeExtensionFile(string& file_name) {
+	return file_name.substr(0, (file_name.rfind(".") + 1)) + "html";
 }
