@@ -10,6 +10,8 @@ class convertToHTML {
 
 	using namespace std;
 
+	void convertToHTML::verification_bold(string& actualString, const string& PreviousString);
+
 	string parseline(string& line);
 
 	void str_replace( string &s, string &search, string &replace );
