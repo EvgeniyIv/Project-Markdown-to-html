@@ -1,4 +1,4 @@
-SRC= Md_file.cpp parse_markdown.cpp main.cpp
+SRC= Md_file.cpp convertToHTML.cpp main.cpp
 OBJ= $(SRC:.c=.o)
 
 all: markdown-cpp
