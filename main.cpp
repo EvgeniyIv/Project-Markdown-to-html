@@ -24,7 +24,7 @@ int main() {
 	string line;
 	string parsed_line;
 
-	cout << "Welcome to Markdown-Cpp" << endl;
+	cout << "Welcome to Markdown-HTML converter" << endl;
 
 	cout << endl;
 
@@ -45,10 +45,12 @@ int main() {
 
 	cout << "File opened" << endl;
 
+	convertToHTML convert_to_html;
+
 	cout << endl;
 
 	while (getline(md_file->getFile(), line)) {
-		outfile << parseline(line) << endl;
+		outfile << convert_to_html.parseline(line) << endl;
 	}
 
 	md_file->closeFile();

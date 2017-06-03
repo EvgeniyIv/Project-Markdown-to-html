@@ -8,9 +8,22 @@ using namespace std;
 
 class convertToHTML {
 
-	using namespace std;
+public:
+	bool verification_bold(string& actualString);
 
-	void convertToHTML::verification_bold(string& actualString, const string& PreviousString);
+	bool verification_italic(string& actualString);
+
+	bool verification_url(string& actualString);
+
+	bool verification_img(string& actualString);
+
+	bool verification_non_ordonate_list(string& actualString);
+
+	bool verification_ordonate_list(string& actualString);
+
+	bool verification_headers(string& actualString);
+
+	bool verification_title(string& actualString);
 
 	string parseline(string& line);
 
