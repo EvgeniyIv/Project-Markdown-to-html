@@ -299,7 +299,7 @@ string convertToHTML::parseline(string& line) {
 			continue;
 		if (verification_italic(stringToReturn))
 			continue;
-		if (verification_non_ordonate_list(stringToReturn))
+		if (verification_unsorted_list(stringToReturn))
 			continue;
 		if (verification_img(stringToReturn))
 			continue;

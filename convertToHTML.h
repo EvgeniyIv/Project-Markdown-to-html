@@ -17,7 +17,7 @@ public:
 
 	bool verification_img(string& actualString);
 
-	bool verification_non_ordonate_list(string& actualString);
+	bool verification_unsorted_list(string& actualString);
 
 	bool verification_ordonate_list(string& actualString);
 
