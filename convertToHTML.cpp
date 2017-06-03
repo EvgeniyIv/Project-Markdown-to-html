@@ -11,9 +11,9 @@ using namespace std;
  * Regex
  */
 //*some tex*
-regex italic_regex(".*\\*(.*)\\*.*");
+regex italic_regex(".*\\*([a-zA-Z0-9ÉÈÊËÀÔÖÇéèêëàôöç ]+)\\*{1}");
 //**some text**
-regex bold_regex(".*\\*\\*(.*)\\*\\*.*");
+regex bold_regex("\\*\\*([a-zA-Z0-9ÉÈÊËÀÔÖÇéèêëàôöç* ]+)\\*\\*.*");
 //*		Some text
 regex list_regex("\\*\t(.*)");
 //1.	Some text
@@ -63,7 +63,7 @@ void convertToHTML::str_replace( string &s, string &search, string &replace ) {
 	}
 }
 
-void convertToHTML::verification_bold(string& actualString) {
+bool convertToHTML::verification_bold(string& actualString) {
 
 	smatch match;
 
@@ -87,10 +87,12 @@ void convertToHTML::verification_bold(string& actualString) {
 		search += "**";
 		cout << "Replace " << actualString << " by " << toReplace << endl;
 		str_replace(actualString, search, toReplace);
+		return true;
 	}
+	return false;
 }
 
-void convertToHTML::verification_italic(string& actualString) {
+bool convertToHTML::verification_italic(string& actualString) {
 
 	smatch match;
 
@@ -114,10 +116,12 @@ void convertToHTML::verification_italic(string& actualString) {
 		search += "*";
 		cout << "Replace " << actualString << " by " << toReplace << endl;
 		str_replace(actualString, search, toReplace);
+		return true;
 	}
+	return false;
 }
 
-void convertToHTML::verification_unsorted_list(string& actualString){
+bool convertToHTML::verification_non_ordonate_list(string& actualString){
 
 	smatch match;
 
@@ -135,10 +139,12 @@ void convertToHTML::verification_unsorted_list(string& actualString){
 		search += match[1];
 		cout << "Replace " << actualString << " by " << toReplace << endl;
 		str_replace(actualString, search, toReplace);
+		return true;
 	}
+	return false;
 }
 
-void convertToHTML::verification_img(string& actualString) {
+bool convertToHTML::verification_img(string& actualString) {
 
 	smatch match;
 
@@ -163,10 +169,12 @@ void convertToHTML::verification_img(string& actualString) {
 		search += ")";
 		cout << "Replace " << actualString << " by " << toReplace << endl;
 		str_replace(actualString, search, toReplace);
+		return true;
 	}
+	return false;
 }
 
-void convertToHTML::verification_url(string& actualString) {
+bool convertToHTML::verification_url(string& actualString) {
 
 	smatch match;
 
@@ -195,10 +203,12 @@ void convertToHTML::verification_url(string& actualString) {
 		search += ")";
 		cout << "Replace " << actualString << " by " << toReplace << endl;
 		str_replace(actualString, search, toReplace);
+		return true;
 	}
+	return false;
 }
 
-void convertToHTML::verification_headers(string& actualString) {
+bool convertToHTML::verification_headers(string& actualString) {
 
 	smatch match;
 
@@ -236,7 +246,9 @@ void convertToHTML::verification_headers(string& actualString) {
 			cout << "Replace " << actualString << " by " << toReplace << endl;
 			str_replace(actualString, search, toReplace);
 		}
+		return true;
 	}
+	return false;
 }
 
 string convertToHTML::parseline(string& line) {
